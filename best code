@@ -1,0 +1,45 @@
+class Solution {
+public:
+void solve(vector<int> &arr, int i, int target, set<vector<int>> &s, vector<int> &v)
+  {
+      if(target==0)
+      {
+          s.insert(v);
+          return ;
+      }
+      if(i>=arr.size())
+      {
+          return ;
+      }    
+      for(int j=i; j<arr.size(); j++)
+      {
+          if(j!= i && arr[j]==arr[j-1])
+          {
+              continue;
+          }
+            if(arr[j]<=target )
+            {
+                v.push_back(arr[j]);
+                solve(arr, j+1, target-arr[j], s, v); 
+                v.pop_back();
+            }
+      }
+
+    return ;
+
+  }
+    
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        set<vector<int>> s;
+        vector<int> v;
+        sort(candidates.begin(), candidates.end());
+        int i = 0;
+        solve(candidates, i, target, s, v);
+        for(auto j:s)
+        {
+            res.push_back(j);
+        }
+        return res;
+    }
+};
